@@ -67,5 +67,15 @@ namespace bankingExercise
 
             Assert.Equal("Account balance insufficient to withdraw", ex.Message);
         }
+
+        [Fact]
+        public void ShouldDecrementBalanceWhenWithdrawGivenValidAmount()
+        {
+            var account = new Account();
+            account.Deposit(1000);
+            account.Withdraw(50);
+
+            Assert.True(account.AccountTransactionsList.Any(transactionRec => transactionRec.Balance == 950));
+        }
     }
 }
