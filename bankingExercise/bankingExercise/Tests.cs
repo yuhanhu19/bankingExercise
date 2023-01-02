@@ -24,8 +24,8 @@ namespace bankingExercise
             var transactionRecStored = new TransactionRec(DateTime.Today.ToString("MM/dd/yyyy"), 100, 100);
 
             account.Deposit(100);
-            var recordCount = account.accountTransactionsList.Count;
-            var transactionRecord = account.accountTransactionsList[0];
+            var recordCount = account.AccountTransactionsList.Count;
+            var transactionRecord = account.AccountTransactionsList[0];
 
             Assert.Equal(1, recordCount);
             Assert.Equal(transactionRecStored.Date, transactionRecord.Date);
@@ -40,12 +40,23 @@ namespace bankingExercise
             
             account.Deposit(100);
             account.Deposit(2);
-            var recordCount = account.accountTransactionsList.Count;
+            var recordCount = account.AccountTransactionsList.Count;
 
             Assert.Equal(2, recordCount);
-            Assert.True(account.accountTransactionsList.Any(transactionRec => transactionRec.Amount == 100));
-            Assert.True(account.accountTransactionsList.Any(transactionRec => transactionRec.Balance == 102));
+            Assert.True(account.AccountTransactionsList.Any(transactionRec => transactionRec.Amount == 100));
+            Assert.True(account.AccountTransactionsList.Any(transactionRec => transactionRec.Balance == 102));
 
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionWhenWithdrawGiven0OrNegativeAmount()
+        {
+            var account = new Account();
+            var ex1 = Assert.Throws<Exception>(() => account.Withdraw(0));
+            var ex2 = Assert.Throws<Exception>(() => account.Withdraw(-2));
+
+            Assert.Equal("Withdraw amount must be greater than 0", ex1.Message);
+            Assert.Equal("Withdraw amount must be greater than 0", ex2.Message);
         }
     }
 }
