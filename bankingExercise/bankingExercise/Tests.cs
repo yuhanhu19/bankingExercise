@@ -77,5 +77,15 @@ namespace bankingExercise
 
             Assert.True(account.AccountTransactionsList.Any(transactionRec => transactionRec.Balance == 950));
         }
+
+        [Fact]
+        public void ShouldPrintStatement()
+        {
+            var account = new Account();
+            account.Deposit(1000);
+            account.Deposit(500);
+            account.Withdraw(100);
+            account.PrintStatement();
+        }
     }
 }
