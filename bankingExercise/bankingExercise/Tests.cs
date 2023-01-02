@@ -58,5 +58,14 @@ namespace bankingExercise
             Assert.Equal("Withdraw amount must be greater than 0", ex1.Message);
             Assert.Equal("Withdraw amount must be greater than 0", ex2.Message);
         }
+
+        [Fact]
+        public void ShouldThrowExceptionWhenAccountBalanceLessThanWithdrawAmount()
+        {
+            var account = new Account();
+            var ex = Assert.Throws<Exception>(() => account.Withdraw(100));
+
+            Assert.Equal("Account balance insufficient to withdraw", ex.Message);
+        }
     }
 }
