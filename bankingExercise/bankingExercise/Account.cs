@@ -15,7 +15,7 @@ namespace bankingExercise
                 throw new Exception("Deposit amount must be greater than 0");
             }
 
-            var newRec = CreateTransactionRec(amount);
+            var newRec = CreateDepositTransactionRec(amount);
             AccountTransactionsList.Add(newRec);
         }
 
@@ -31,13 +31,21 @@ namespace bankingExercise
             {
                 throw new Exception("Account balance insufficient to withdraw");
             }
+            var newRec = CreateWithdrawTransactionRec(amount);
+            AccountTransactionsList.Add(newRec);
+        }
+
+        private TransactionRec CreateWithdrawTransactionRec(int amount)
+        {
+            var currentBalance = AccountTransactionsList.Sum(transactionRec => transactionRec.Balance);
+            return new TransactionRec(DateTime.Today.ToString("MM/dd/yyyy"), amount, currentBalance - amount);
         }
 
         public void PrintStatement()
         {
         }
 
-        private TransactionRec CreateTransactionRec(int amount)
+        private TransactionRec CreateDepositTransactionRec(int amount)
         {
             int balance;
             if (AccountTransactionsList.Count == 0)
