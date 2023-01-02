@@ -25,6 +25,12 @@ namespace bankingExercise
             {
                 throw new Exception("Withdraw amount must be greater than 0");
             }
+
+            if (AccountTransactionsList.Count == 0 ||
+                AccountTransactionsList.Sum(transactionRec => transactionRec.Balance) < amount)
+            {
+                throw new Exception("Account balance insufficient to withdraw");
+            }
         }
 
         public void PrintStatement()
